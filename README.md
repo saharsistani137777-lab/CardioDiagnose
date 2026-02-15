@@ -1,4 +1,4 @@
-# CardioDiagnose
+# CardioDiagnose❤
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.13%2B-orange)](https://tensorflow.org)
@@ -94,7 +94,7 @@ pip install -r requirements.txt
 
 ---
 
-Usage
+##Usage
 
 Train the model
 
@@ -110,22 +110,10 @@ Then open http://localhost:5000
 
 ---
 
-Project Structure
-CardioDiagnose/
-├── app.py              # Web application
-├── train.py            # Model training
-├── model.py            # Neural network architectures
-├── preprocess.py       # ECG preprocessing
-├── config.py           # Configuration
-├── requirements.txt    # Dependencies
-├── README.md           # This file
-├── LICENSE             # MIT license
-├── download_data.py    # Dataset download helper
-└── data/               # ECG dataset (not included)
 
 ---
 
-API Endpoints
+##API Endpoints
 
 Endpoint Method Description
 /health GET Server status
@@ -134,7 +122,7 @@ Endpoint Method Description
 
 ---
 
-Benchmark
+##Benchmark
 
 Platform Time per ECG RAM
 CPU i7 0.3 sec 180 MB
@@ -144,7 +132,7 @@ Raspberry Pi 4 1.8 sec 120 MB
 
 ---
 
-License
+##License
 
 MIT License. Free for academic and commercial use.
 
