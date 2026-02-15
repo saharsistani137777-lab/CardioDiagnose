@@ -1,4 +1,4 @@
-# CardioDiagnose❤
+# CardioDiagnose🫀
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.13%2B-orange)](https://tensorflow.org)
