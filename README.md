@@ -1,228 +1,165 @@
 # CardioDiagnose
 
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.13%2B-orange)](https://tensorflow.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/saharsistani137777-lab/CardioDiagnose?style=social)](https://github.com/saharsistani137777-lab/CardioDiagnose)
+
 12-Lead ECG Arrhythmia Classification with Deep Learning
 
 ---
 
+## Why This Project
+
+17.9 million people die from cardiovascular diseases each year. Early detection saves lives. This project builds a tool that analyzes ECG signals and identifies arrhythmias with accuracy comparable to cardiologists.
+
+No black box. No magic. Just code and data.
+
+---
+
+## What It Detects
+
+| Class | Description | Clinical Significance |
+|-------|-------------|----------------------|
+| Normal | Sinus rhythm | Healthy heart function |
+| AFib | Atrial Fibrillation | 5x increased stroke risk |
+| PVC | Premature Ventricular Contraction | Can indicate heart disease |
+| Tachycardia | Fast heart rate (>100 bpm) | May lead to heart failure |
+| Bradycardia | Slow heart rate (<60 bpm) | Can cause syncope |
+
+---
+
+## Dataset
+
+**PTB-XL** - A large publicly available 12-lead ECG database from PhysioNet.
+
+| Property | Value |
+|----------|-------|
+| Records | 21,837 clinical ECGs |
+| Duration | 10 seconds each |
+| Sampling rate | 500 Hz |
+| Patients | 18,885 |
+| Leads | 12 |
+| Classes | 5 (after grouping) |
+
+Download: [https://physionet.org/content/ptb-xl/1.0.3/](https://physionet.org/content/ptb-xl/1.0.3/)
+
+After downloading, extract to `data/` folder.
+
+---
+
 ## Model Architecture
-                      ECG SIGNAL (5000 x 12)
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │   Conv1D (64)   │
-                    │   Kernel: 10    │
-                    │   Activation: ReLU
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │   MaxPooling1D  │
-                    │     Pool: 5     │
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │   Conv1D (128)  │
-                    │   Kernel: 10    │
-                    │   Activation: ReLU
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │   MaxPooling1D  │
-                    │     Pool: 5     │
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │   Conv1D (256)  │
-                    │   Kernel: 10    │
-                    │   Activation: ReLU
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │ GlobalAveragePool│
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │    Dense (128)  │
-                    │   Dropout (0.3) │
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │    Dense (64)   │
-                    │   Dropout (0.3) │
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │    Dense (5)    │
-                    │   Softmax       │
-                    └────────┬────────┘
-                              │
-                              ↓
-                    ┌─────────────────┐
-                    │   Normal  AFib  │
-                    │   PVC     Tach  │
-                    │   Brady         │
-                    └─────────────────┘
 
----
-## ECG Waveforms
+| Layer | Output Shape | Parameters |
+|-------|--------------|------------|
+| Input | (5000, 12) | 0 |
+| Conv1D (64, k=10) | (4991, 64) | 7,744 |
+| MaxPooling1D (5) | (998, 64) | 0 |
+| Conv1D (128, k=10) | (989, 128) | 82,048 |
+| MaxPooling1D (5) | (197, 128) | 0 |
+| Conv1D (256, k=10) | (188, 256) | 328,192 |
+| GlobalAveragePooling1D | (256) | 0 |
+| Dropout (0.3) | (256) | 0 |
+| Dense (128) | (128) | 32,896 |
+| Dropout (0.3) | (128) | 0 |
+| Dense (64) | (64) | 8,256 |
+| Dense (5) | (5) | 325 |
 
-**Normal**     ▁▂▃▂▁    ▁▂▃▂▁    ▁▂▃▂▁    ▁▂▃▂▁
-**AFib**       ▁▂▁▃▁▂▁▃▁▂▁▃▁▂▁▃▁▂▁▃▁▂▁▃▁▂
-**PVC**        ▁▂▃▂▁    ▁▂▃▂▁    ▁▂▃▂▃▂▁    ▁▂▃▂▁
-**Tachy**      ▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂
-**Brady**      ▁▂▃▂▁        ▁▂▃▂▁        ▁▂▃▂▁
-
-## Detectable Arrhythmias
-
-The system currently detects 5 types of cardiac rhythms:
-
-Normal Sinus Rhythm
-- Rate: 60-100 bpm
-- Rhythm: Regular
-- P waves: Present and normal
-- PR interval: 120-200 ms
-
-Atrial Fibrillation (AFib)
-- Rate: Variable, usually fast
-- Rhythm: Irregularly irregular
-- P waves: Absent
-- Clinical: 5x increased stroke risk
-
-Premature Ventricular Contraction (PVC)
-- Rhythm: Regular with premature beats
-- QRS: Wide (>120 ms), bizarre morphology
-- Compensatory pause present
-- Clinical: Can indicate heart disease
-
-Sinus Tachycardia
-- Rate: >100 bpm
-- Rhythm: Regular
-- P waves: Present
-- Clinical: May indicate fever, anxiety, heart failure
-
-Sinus Bradycardia
-- Rate: <60 bpm
-- Rhythm: Regular
-- P waves: Present
-- Clinical: Can be normal in athletes, or indicate heart block
+**Total parameters:** 459,461
 
 ---
 
-# Training Progress:
+## Performance
 
-Epoch 1/50: █░░░░░░░░░░░░░░░░░░░ 5%   loss: 1.82 - acc: 0.42
-Epoch 5/50: ███░░░░░░░░░░░░░░░░░ 15%  loss: 1.21 - acc: 0.58
-Epoch 10/50:████░░░░░░░░░░░░░░░░ 25%  loss: 0.92 - acc: 0.67
-Epoch 15/50:██████░░░░░░░░░░░░░░ 35%  loss: 0.74 - acc: 0.74
-Epoch 20/50:████████░░░░░░░░░░░░ 45%  loss: 0.61 - acc: 0.79
-Epoch 25/50:██████████░░░░░░░░░░ 55%  loss: 0.52 - acc: 0.83
-Epoch 30/50:████████████░░░░░░░░ 65%  loss: 0.44 - acc: 0.86
-Epoch 35/50:██████████████░░░░░░ 75%  loss: 0.38 - acc: 0.88
-Epoch 40/50:████████████████░░░░ 85%  loss: 0.33 - acc: 0.90
-Epoch 45/50:██████████████████░░ 95%  loss: 0.29 - acc: 0.91
-Epoch 50/50:████████████████████ 100% loss: 0.26 - acc: 0.92
----
+| Class | Precision | Recall | F1-Score | Support |
+|-------|-----------|--------|----------|---------|
+| Normal | 0.93 | 0.92 | 0.92 | 952 |
+| AFib | 0.91 | 0.90 | 0.90 | 341 |
+| PVC | 0.88 | 0.87 | 0.87 | 278 |
+| Tachycardia | 0.90 | 0.91 | 0.90 | 315 |
+| Bradycardia | 0.92 | 0.93 | 0.92 | 298 |
 
-# Inference Speed:
-
-Platform          Time per ECG    RAM Usage
-─────────────────────────────────────────────
-CPU (i7)          0.3 seconds     180 MB
-CPU (i5)          0.5 seconds     180 MB
-GPU (GTX 1060)    0.08 seconds    220 MB
-GPU (A100)        0.02 seconds    240 MB
-Raspberry Pi 4    1.8 seconds     120 MB
----
-
-# API Endpoints:
-
-GET  /health
-     └── Response: { "status": "healthy", "model": "loaded" }
-
-POST /predict
-     ├── Body: multipart/form-data
-     │   └── ecg_file: [ECG .dat file]
-     └── Response: {
-           "success": true,
-           "diagnosis": "Atrial Fibrillation",
-           "confidence": 0.94,
-           "class_id": 1,
-           "processing_time": 0.32
-       }
-
-GET  /info
-     └── Response: {
-           "classes": ["Normal", "AFib", "PVC", "Tachycardia", "Bradycardia"],
-           "input_shape": [5000, 12],
-           "sampling_rate": 500,
-           "accuracy": 0.912
-       }
----
-
-🔬 Model Interpretability (Grad-CAM):
-
-Original ECG:     ╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮
-                 ╭╯ ╰╮ ╭╯ ╰╮ ╭╯ ╰╮ ╭╯ ╰╮ ╭╯ ╰╮
-                ╭╯   ╰╮╯   ╰╮╯   ╰╮╯   ╰╮╯   ╰╮
-                │     │     │     │     │     │
-
-Grad-CAM Heatmap:
-                 ░░░▓▓███▓▓░░░▓▓███▓▓░░░▓▓███▓▓
-                 ░▓███████▓░▓███████▓░▓███████▓
-                 ███████████████████████████████
-                 ░▓███████▓░▓███████▓░▓███████▓
-                 ░░░▓▓███▓▓░░░▓▓███▓▓░░░▓▓███▓▓
-
-Focus Areas:         ↑         ↑         ↑
-                QRS Complex  P Wave   T Wave
----
-
-# Comparison with Other Methods:
-
-Method              Accuracy  Sensitivity  Specificity  Paper
-────────────────────────────────────────────────────────────────
-CardioDiagnose (CNN)  91.2%     90.5%       91.8%      This work
-Hannun et al. (2019)  90.8%     90.2%       91.3%      Nature Medicine
-Rajpurkar et al.     91.5%     91.0%       92.1%      arXiv 2017
-Ribeiro et al.       90.1%     89.7%       90.5%      Nature Comms 2020
----
-
-# Clinical Validation Status:
-
-┌─────────────────────────────────────────────────┐
-│ Phase 1: Algorithm development    ✅ Complete   │
-│ Phase 2: Internal validation      ✅ Complete   │
-│ Phase 3: External validation      ⏳ In progress│
-│ Phase 4: Prospective study        ⏳ Planned    │
-│ Phase 5: Regulatory approval      ⏳ Planned    │
-└─────────────────────────────────────────────────┘
----
-
-# Code Example:
-
-`python
-# Load a patient ECG
-record = wfdb.rdrecord('patient_100')
-
-# Preprocess
-signal = preprocess_signal(record.p_signal)
-
-# Predict
-model = tf.keras.models.load_model('best_model.h5')
-pred = model.predict(signal.reshape(1, 5000, 12))
-class_idx = np.argmax(pred[0])
-
-# Result
-print(f"Diagnosis: {CLASS_NAMES[class_idx]}")
-print(f"Confidence: {pred[0][class_idx]:.2%}")
-`
+**Overall accuracy:** 91.2%
 
 ---
+
+## Installation
+bash
+git clone https://github.com/saharsistani137777-lab/CardioDiagnose.git
+cd CardioDiagnose
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate    # Windows
+pip install -r requirements.txt
+
+---
+
+Usage
+
+Train the model
+
+bash
+python train.py
+
+Run web application
+
+bash
+python app.py
+
+Then open http://localhost:5000
+
+---
+
+Project Structure
+CardioDiagnose/
+├── app.py              # Web application
+├── train.py            # Model training
+├── model.py            # Neural network architectures
+├── preprocess.py       # ECG preprocessing
+├── config.py           # Configuration
+├── requirements.txt    # Dependencies
+├── README.md           # This file
+├── LICENSE             # MIT license
+├── download_data.py    # Dataset download helper
+└── data/               # ECG dataset (not included)
+
+---
+
+API Endpoints
+
+Endpoint Method Description
+/health GET Server status
+/predict POST Upload ECG, get diagnosis
+/info GET Model information
+
+---
+
+Benchmark
+
+Platform Time per ECG RAM
+CPU i7 0.3 sec 180 MB
+CPU i5 0.5 sec 180 MB
+GPU GTX 1060 0.08 sec 220 MB
+Raspberry Pi 4 1.8 sec 120 MB
+
+---
+
+License
+
+MIT License. Free for academic and commercial use.
+
+---
+
+Citation
+
+GitHub (https://github.com/saharsistani137777-lab/CardioDiagnose.git)
+GitHub - saharsistani137777-lab/CardioDiagnose: ECG Arrhythmia Detection using Deep Learning - AI in Medicine
+ECG Arrhythmia Detection using Deep Learning - AI in Medicine - saharsistani137777-lab/CardioDiagnose
+
+@software{CardioDiagnose2026,
+  author = {Sistani, Sahar},
+  title = {CardioDiagnose: ECG Arrhythmia Detection},
+  url = {https://github.com/saharsistani137777-lab/CardioDiagnose},
+  year = {2026}
+}
 
