@@ -71,88 +71,47 @@
                     └─────────────────┘
 
 ---
+## ECG Waveforms
 
-##(ECG Waveform):
+**Normal**     ▁▂▃▂▁    ▁▂▃▂▁    ▁▂▃▂▁    ▁▂▃▂▁
+**AFib**       ▁▂▁▃▁▂▁▃▁▂▁▃▁▂▁▃▁▂▁▃▁▂▁▃▁▂
+**PVC**        ▁▂▃▂▁    ▁▂▃▂▁    ▁▂▃▂▃▂▁    ▁▂▃▂▁
+**Tachy**      ▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂▁▂▃▂
+**Brady**      ▁▂▃▂▁        ▁▂▃▂▁        ▁▂▃▂▁
 
-Lead I:   ╭─╮     ╭─╮     ╭─╮     ╭─╮
-         ╭╯ ╰╮   ╭╯ ╰╮   ╭╯ ╰╮   ╭╯ ╰╮
-        ╭╯   ╰╮ ╭╯   ╰╮ ╭╯   ╰╮ ╭╯   ╰╮
-       ╭╯     ╰╮╯     ╰╮╯     ╰╮╯     ╰╮
-       │       │       │       │       │
+## Detectable Arrhythmias
 
-Lead II:  ╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮
-         ╭╯ ╰╮ ╭╯ ╰╮ ╭╯ ╰╮ ╭╯ ╰╮ ╭╯ ╰╮
-        ╭╯   ╰╮╯   ╰╮╯   ╰╮╯   ╰╮╯   ╰╮
-       ╭╯     │     │     │     │     ╰╮
-       │      │     │     │     │      │
+The system currently detects 5 types of cardiac rhythms:
 
-Lead III: ╭─╮    ╭─╮    ╭─╮    ╭─╮    ╭─╮
-         ╭╯ ╰╮  ╭╯ ╰╮  ╭╯ ╰╮  ╭╯ ╰╮  ╭╯ ╰╮
-        ╭╯   ╰╮╭╯   ╰╮╭╯   ╰╮╭╯   ╰╮╭╯   ╰╮
-       ╭╯     ╰╯     ╰╯     ╰╯     ╰╯     ╰╮
-       │       │       │       │       │
+Normal Sinus Rhythm
+- Rate: 60-100 bpm
+- Rhythm: Regular
+- P waves: Present and normal
+- PR interval: 120-200 ms
 
+Atrial Fibrillation (AFib)
+- Rate: Variable, usually fast
+- Rhythm: Irregularly irregular
+- P waves: Absent
+- Clinical: 5x increased stroke risk
 
-Normal Sinus Rhythm:
-╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮
-╯ ╰───╯ ╰───╯ ╰───╯ ╰───╯ ╰───╯ ╰───╯ ╰
+Premature Ventricular Contraction (PVC)
+- Rhythm: Regular with premature beats
+- QRS: Wide (>120 ms), bizarre morphology
+- Compensatory pause present
+- Clinical: Can indicate heart disease
 
-Atrial Fibrillation:
-╭╮╭╮ ╭╮ ╭╮╭╮╭╮ ╭╮ ╭╮╭╮ ╭╮╭╮ ╭╮ ╭╮╭╮
-╯╰╯╰─╯╰─╯╰╯╰╯╰─╯╰─╯╰╯╰─╯╰╯╰─╯╰─╯╰╯╰
+Sinus Tachycardia
+- Rate: >100 bpm
+- Rhythm: Regular
+- P waves: Present
+- Clinical: May indicate fever, anxiety, heart failure
 
-PVC (Premature Ventricular Contraction):
-╭─╮   ╭─╮   ╭───╮   ╭─╮   ╭─╮   ╭─╮
-╯ ╰───╯ ╰───╯   ╰───╯ ╰───╯ ╰───╯ ╰
-
-Tachycardia:
-╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮
-╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰
-
-Bradycardia:
-╭─╮         ╭─╮         ╭─╮         ╭─╮
-╯ ╰─────────╯ ╰─────────╯ ╰─────────╯ ╰
-
----
-
-
-
-#Detectable Arrhythmias:
-1.Normal Sinus Rhythm:
-╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮   ╭─╮
-╯ ╰───╯ ╰───╯ ╰───╯ ╰───╯ ╰───╯ ╰───╯ ╰
-
-2.Atrial Fibrillation:
-╭╮╭╮ ╭╮ ╭╮╭╮╭╮ ╭╮ ╭╮╭╮ ╭╮╭╮ ╭╮ ╭╮╭╮
-╯╰╯╰─╯╰─╯╰╯╰╯╰─╯╰─╯╰╯╰─╯╰╯╰─╯╰─╯╰╯╰
-
-3.PVC (Premature Ventricular Contraction):
-╭─╮   ╭─╮   ╭───╮   ╭─╮   ╭─╮   ╭─╮
-╯ ╰───╯ ╰───╯   ╰───╯ ╰───╯ ╰───╯ ╰
-
-4.Tachycardia:
-╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮
-╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰
-
-5.Bradycardia:
-╭─╮         ╭─╮         ╭─╮         ╭─╮
-╯ ╰─────────╯ ╰─────────╯ ╰─────────╯ ╰
----
-
-# Confusion Matrix :
-
-
-┌─────────────────────────────────┐
-              │           PREDICTED              │
-              │  N    AF   PVC   T    B   Total  │
-┌─────────────┼─────────────────────────────────┤
-│  N          │ 876   32   18    14   12   952  │
-│  AF         │ 18    307  8     5    3    341  │
-│  PVC        │ 12    6    242   10   8    278  │
-│  T          │ 9     4    7     287  8    315  │
-│  B          │ 8     3    5     6    276   298 │
-└─────────────┴─────────────────────────────────┘
-N: Normal | AF: Atrial Fibrillation | PVC: Premature Ventricular Contraction | T: Tachycardia | B: Bradycardia
+Sinus Bradycardia
+- Rate: <60 bpm
+- Rhythm: Regular
+- P waves: Present
+- Clinical: Can be normal in athletes, or indicate heart block
 
 ---
 
